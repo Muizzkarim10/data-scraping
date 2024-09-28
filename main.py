@@ -4,7 +4,11 @@ from datetime import datetime, timedelta
 
 def select_date(page, year, month, day):
     page.click('//a[@href="#sidebar-racecards"]')
+
+    # Wait for the date picker to become visible
+    page.wait_for_selector('#sidebar-racecards-datepicker', state='attached')
     page.click('#sidebar-racecards-datepicker')
+    
     page.select_option('.pika-select-year', str(year))
     page.select_option('.pika-select-month', str(month - 1))
     page.click(f'button.pika-button[data-pika-day="{day}"][data-pika-year="{year}"][data-pika-month="{month - 1}"]')
@@ -22,7 +26,8 @@ def select_date(page, year, month, day):
     # Print the values of all child elements
     for i in range(count):
         meeting_value = child.nth(i).locator('.meetings_group')
-        print(meeting_value)
+        meeting_value.click()
+        
         # page.wait_for_selector('//*[@id="tab-race-nav--uk"]/div/div/div[1]/div/div[1]/div/div/ul/li[1]/a').click()
 
 
